@@ -40,7 +40,7 @@ class LinebotController < ApplicationController
 
         if event.message['text'].include?("天気")
             tenki_url = 'http://api.openweathermap.org/data/2.5/forecast?q=tokyo,jp&appid='
-            token = '706f849c7507e1fcf0c4e15a620c50eb'
+            token = ENV["WEATHER_APIKEY"]
 
             uri = URI.parse(tenki_url + token)
             http = Net::HTTP.new(uri.host, uri.port)
