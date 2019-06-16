@@ -24,6 +24,7 @@ class LinebotController < ApplicationController
 
     events.each { |event|
 
+        # Wikipe情報
         if event.message['text'] != nil
             word = event.message['text']
             Wikipedia.Configure {
@@ -34,7 +35,11 @@ class LinebotController < ApplicationController
 
         page = Wikipedia.find(word)
 
-        response = "お答えしましょう！！" + "\n" + page.summary + "\n" + page.fullurl
+        if event.message['text'].include?("天気")
+            response = "今日の天気が知りたいねー"
+        else
+            response = "お答えしましょう！！" + "\n" + page.summary + "\n" + page.fullurl
+        end
 
         case event
         when Line::Bot::Event::Message
