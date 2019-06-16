@@ -23,11 +23,11 @@ class LinebotController < ApplicationController
 
     events.each { |event|
 
-        if event.message['text'].include("天気")
-            response = "今日の天気はなんでしょう"
-        else
-            response = "何もなし"
-        end
+        # if event.message['text'].include("天気")
+        #     response = "今日の天気はなんでしょう"
+        # else
+        #     response = "何もなし"
+        # end
 
         case event
         when Line::Bot::Event::Message
@@ -39,7 +39,7 @@ class LinebotController < ApplicationController
             }
             client.reply_message(event['replyToken'], message)
             end
-      end
+        end
     }
 
     head :ok
