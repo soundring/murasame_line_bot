@@ -34,7 +34,7 @@ class LinebotController < ApplicationController
 
         page = Wikipedia.find(word)
 
-        response = page.summary + "\n" + page.fullurl
+        response = "お答えしましょう！！" + "\n" + page.summary + "\n" + page.fullurl
 
         case event
         when Line::Bot::Event::Message
