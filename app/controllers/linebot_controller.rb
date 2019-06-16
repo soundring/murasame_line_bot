@@ -48,7 +48,7 @@ class LinebotController < ApplicationController
             req = Net::HTTP::Get.new(uri.request_uri)
             res = http.request(req)
             json = JSON.parse(res.body)
-            response = json["list"][0]["weather"][0]["main"]
+            response = json["list"][0]["weather"][0]["main"] + "だよ！"
 
         elsif event.message["text"].include?("行ってきます")
             response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
