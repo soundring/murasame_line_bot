@@ -1,5 +1,7 @@
 class LinebotController < ApplicationController
-  require 'line/bot'  # gem 'line-bot-api'
+    require 'line/bot'  # gem 'line-bot-api'
+    require "json"
+    require "open-uri"
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
@@ -23,15 +25,20 @@ class LinebotController < ApplicationController
 
     events.each { |event|
 
-        if event.message['text'].include?("好き")
-            response = "んほぉぉぉぉぉぉ！すきすきすきすきすきすきすきすきぃぃぃぃぃ"
-          elsif event.message["text"].include?("行ってきます")
+        if event.message['text'].include?("天気")
+            API_KEY = ENV["WEATHER_APIKEY"]
+            BASE_URL = "http://api.openweathermap.org/data/2.5/forecast"
+
+            weatherResponse = open(BASE_URL + "?q=tokyo,jp&APPID=#{API_KEY}")
+            otenki = weatherResponse.weather[0].main
+            response = otenki
+        elsif event.message["text"].include?("行ってきます")
             response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
-          elsif event.message['text'].include?("おはよう")
+        elsif event.message['text'].include?("おはよう")
             response = "おはよう。なんで今まで連絡くれなかったの？"
-          else
+        else
             response = "こんにちは"
-          end
+        end
 
         case event
         when Line::Bot::Event::Message
