@@ -28,10 +28,7 @@ class LinebotController < ApplicationController
         if event.message['text'].include?("天気")
             API_KEY = ENV["WEATHER_APIKEY"]
             BASE_URL = "http://api.openweathermap.org/data/2.5/forecast"
-
-            weatherResponse = open(BASE_URL + "?q=tokyo,jp&APPID=#{API_KEY}")
-            otenki = weatherResponse.weather[0].main
-            response = otenki
+            response = open(BASE_URL + "?q=tokyo,jp&APPID=#{API_KEY}")
         elsif event.message["text"].include?("行ってきます")
             response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
         elsif event.message['text'].include?("おはよう")
