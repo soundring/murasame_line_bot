@@ -39,7 +39,7 @@ class LinebotController < ApplicationController
         page = Wikipedia.find(word)
 
         if event.message['text'].include?("天気")
-            tenki_url = 'http://api.openweathermap.org/data/2.5/forecast?q=tokyo,jp&appid='
+            tenki_url = 'http://api.openweathermap.org/data/2.5/forecast?q=tokyo,jp&lang=ja&appid='
             token = ENV["WEATHER_APIKEY"]
 
             uri = URI.parse(tenki_url + token)
@@ -48,7 +48,7 @@ class LinebotController < ApplicationController
             req = Net::HTTP::Get.new(uri.request_uri)
             res = http.request(req)
             json = JSON.parse(res.body)
-            response = json["list"][0]["weather"][0]["main"] + "だよ！"
+            response = json["list"][0]["weather"][0]["description"] + "だよ！"
 
         elsif event.message["text"].include?("行ってきます")
             response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
