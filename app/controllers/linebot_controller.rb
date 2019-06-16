@@ -26,7 +26,7 @@ class LinebotController < ApplicationController
         if event.message['text'].include("天気")
             response = "今日の天気はなんでしょう"
         else
-            response = event.message['text']
+            response = "何もなし"
         end
 
       case event
