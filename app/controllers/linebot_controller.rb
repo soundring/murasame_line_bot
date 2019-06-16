@@ -9,7 +9,7 @@ class LinebotController < ApplicationController
         }
     end
 
-    def callback
+    post '/callback' do
         body = request.body.read
 
         signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -30,8 +30,6 @@ class LinebotController < ApplicationController
                     client.reply_message(event['replyToken'], message)
                 end
             end
-        }
-
-        "OK"
     end
+    "OK"
 end
