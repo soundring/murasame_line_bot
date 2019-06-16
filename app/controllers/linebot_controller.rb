@@ -29,7 +29,7 @@ class LinebotController < ApplicationController
         #     response = "何もなし"
         # end
 
-        response = event.message['text']
+        response = "こんにちは"
 
         case event
         when Line::Bot::Event::Message
