@@ -1,6 +1,9 @@
 class LinebotController < ApplicationController
     require 'line/bot'  # gem 'line-bot-api'
     require 'wikipedia'
+    require "json"
+    require 'net/http'
+    require 'uri'
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
@@ -36,9 +39,22 @@ class LinebotController < ApplicationController
         page = Wikipedia.find(word)
 
         if event.message['text'].include?("天気")
-            response = "今日の天気が知りたいねー"
+            qiita_uri = 'http://api.openweathermap.org/data/2.5/forecast?q=tokyo,jp&appid='
+            token = '706f849c7507e1fcf0c4e15a620c50eb'
+
+            uri = URI.parse(qiita_uri + token)
+            http = Net::HTTP.new(uri.host, uri.port)
+
+            req = Net::HTTP::Get.new(uri.request_uri)
+            res = http.request(req)
+            response = res.code
+
+        elsif event.message["text"].include?("行ってきます")
+            response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
+        elsif event.message['text'].include?("おはよう")
+            response = "おはよう。なんで今まで連絡くれなかったの？"
         else
-            response = "お答えしましょう！！" + "\n" + page.summary + "\n" + page.fullurl
+            response = "説明しよう！！" + "\n" + page.summary + "\n" + page.fullurl
         end
 
         case event
