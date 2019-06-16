@@ -23,13 +23,15 @@ class LinebotController < ApplicationController
 
     events.each { |event|
 
-        # if event.message['text'].include("天気")
-        #     response = "今日の天気はなんでしょう"
-        # else
-        #     response = "何もなし"
-        # end
-
-        response = "こんにちは"
+        if event.message['text'].include?("好き")
+            response = "んほぉぉぉぉぉぉ！すきすきすきすきすきすきすきすきぃぃぃぃぃ"
+          elsif event.message["text"].include?("行ってきます")
+            response = "どこいくの？どこいくの？どこいくの？寂しい寂しい寂しい。。。"
+          elsif event.message['text'].include?("おはよう")
+            response = "おはよう。なんで今まで連絡くれなかったの？"
+          else
+            response = "こんにちは"
+          end
 
         case event
         when Line::Bot::Event::Message
